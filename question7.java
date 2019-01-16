@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Arrays;
 
 
 public class question7 {
@@ -21,7 +20,7 @@ public class question7 {
             ResultSet rst1 = pst1.executeQuery();
             String[] start_time = new String[48879]; // max number of rows in database is 48879. get the start times from database and load it into string array.  
             String[] end_time = new String[48879];
-            int i=0,count=0;
+            int i=0;
             while(rst1.next())
             {
                 start_time[i] = rst1.getString(1);//start time is in format DD/MM/YY HH:mm:ss
@@ -33,21 +32,26 @@ public class question7 {
             //Sorting the data to compare between next start time and previous end time. 
                 //Arrays.sort(start_time);
                 //Arrays.sort(end_time);
-                //using the logic , check for next row of data , if start time < end time then count++
-                i=0;
-                int j=0;
-                int max = 0;
-                for(i=1 ; i<end_time.length; i++)  
+                //using the logic , if the interval starts, then increment the counter and if the interval ends, then decrement the counter 
+                //i.e. if(start[i]<end[i]), then a new range starts and increment the counter. 
+                i=0;// using this pointer to point at start time
+                int j=0;//using this pointer to point at end time. 
+                int current_overlap=0,max_overlap=0;
+                while(i<start_time.length && j<end_time.length)
                 {
-                    if((start_time[i].compareTo(end_time[i-1]))<0)// comparing the start time with end time
+                    if((start_time[i].compareTo(end_time[j])) <0)
                     {
-                        count++;
-                        max = Math.max(count, max);
+                        current_overlap++; // start time < end time , so, incrementing the counter 
+                        max_overlap = Math.max(current_overlap,max_overlap);
+                        i++;//incrementing the pointer of start time. 
                     }
                     else
-                       count--;
+                    {
+                        current_overlap--; // start> end time, so decrementing the counter 
+                        j++;// incrementing the pointer of end time. 
+                    }
                 }
-                System.out.println("Maximum number of sim. calls is :"+max);
+                System.out.println("Maximum number of sim. calls is :"+max_overlap);
         }
         catch(Exception e)// used to catch the exception. 
         {
