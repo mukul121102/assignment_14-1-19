@@ -58,4 +58,3 @@ public class FileReading {
         }
     }
 }
-//getting the problem with the code that only half of the csv file is being imported i.e. 58578/2 = 29289.
