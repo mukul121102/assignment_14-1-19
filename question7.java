@@ -30,8 +30,8 @@ public class question7 {
                 i++;
             }
             //Sorting the data to compare between next start time and previous end time. 
-                //Arrays.sort(start_time);
-                //Arrays.sort(end_time);
+                Arrays.sort(start_time);
+                Arrays.sort(end_time);
                 //using the logic , if the interval starts, then increment the counter and if the interval ends, then decrement the counter 
                 //i.e. if(start[i]<end[i]), then a new range starts and increment the counter. 
                 i=0;// using this pointer to point at start time
